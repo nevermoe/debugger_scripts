@@ -33,4 +33,10 @@ except that it searches in the whole valid memory mappings.
     stop_at_read {fd}
     ```
     The `fd` is obtained from `stop_at_open` in the 4th feature.
+    
 ### lldb
+1. display image mapping
+    ```
+    imlist {image_name}
+    ```
+    A very simple feature that only display the relavant image(s) by grep after calling `image list`
