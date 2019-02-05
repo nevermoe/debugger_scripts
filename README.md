@@ -1,4 +1,5 @@
 # debugger_scripts
+Simple but convenient debugger scripts for Android and iOS debugging.
 
 ## Installation
 Installation scripts are in `lldb_utilities.py` and `gdb_utilities.py`. Please efer to the python file.
