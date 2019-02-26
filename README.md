@@ -12,14 +12,14 @@ Installation scripts are in `lldb_utilities.py` and `gdb_utilities.py`. Please e
     ```
 2. search the whole memory
 
-This command is just like the `find` command in gdb: 
-[https://sourceware.org/gdb/onlinedocs/gdb/Searching-Memory.html](https://sourceware.org/gdb/onlinedocs/gdb/Searching-Memory.html), 
-except that it searches in the whole valid memory mappings.
+    This command is just like the `find` command in gdb: 
+    [https://sourceware.org/gdb/onlinedocs/gdb/Searching-Memory.html](https://sourceware.org/gdb/onlinedocs/gdb/Searching-Memory.html), 
+    except that it searches in the whole valid memory mappings.
 
-    e.g.:
-    ```
-    full_search /b 0xff,0xff,0xff,0xfc
-    ```
+        e.g.:
+        ```
+        full_search /b 0xff,0xff,0xff,0xfc
+        ```
 3. stop when library is loaded
     ```
     stop_at_load {libname}
