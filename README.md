@@ -11,6 +11,7 @@ Installation scripts are in `lldb_utilities.py` and `gdb_utilities.py`. Please e
     xxd {addr} {size}
     ```
 2. search the whole memory
+
 This command is just like the `find` command in gdb: 
 [https://sourceware.org/gdb/onlinedocs/gdb/Searching-Memory.html](https://sourceware.org/gdb/onlinedocs/gdb/Searching-Memory.html), 
 except that it searches in the whole valid memory mappings.
