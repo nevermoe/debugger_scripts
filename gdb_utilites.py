@@ -88,6 +88,53 @@ class StopAtOpen(gdb.Command):
 
 StopAtOpen()
 
+class StopBeforeInit(gdb.Command):
+    def __init__(self):
+        super(StopBeforeInit, self).__init__('stop_before_init', gdb.COMMAND_NONE)
+
+    def invoke(self, target_library, from_tty):
+        gdb.execute('set pagination off')
+        gdb.execute('handle all nostop pass noprint')
+        gdb.execute('disable breakpoints')
+        gdb.execute('set scheduler-locking step')
+
+        # match __dl__Z9do_dlopenPKciPK17android_dlextinfoPv or __dl__Z9do_dlopenPKciPK17android_dlextinfo 
+        ret = gdb.execute('info functions do_dlopen.*android_dlextinfo', False, True)
+        dlopen_addr = None
+        words = ret.split()
+        for word in words:
+            if word.startswith('0x'):
+                dlopen_addr = word
+                break
+
+        gdb.execute('break *(%s)' % (dlopen_addr))
+
+        library_name = ''
+        while target_library not in library_name:
+            gdb.execute('continue')
+            library_name = gdb.execute('x/s $r0', False, True)
+            print "library_name: %s " % library_name
+
+        # # match __dl__ZN6soinfo17call_constructorsEv (Android 6.0.1)
+        # ret = gdb.execute('info functions call_constructors', False, True)
+        # call_constructors_addr = None
+        # words = ret.split()
+        # for word in words:
+        #      if word.startswith('0x'):
+        #          call_constructors_addr = word
+        #          break
+
+        # gdb.execute('break *(%s)' % (call_constructors_addr))
+
+        # # execute until call_constructors
+        # gdb.execute('set scheduler-locking on') # lock thread
+        # gdb.execute('continue')
+        # gdb.execute('set scheduler-locking step') # unlock thread
+
+        # print "library %s loaded before init array executed" % library_name
+
+StopBeforeInit()
+
 class StopAtLoad(gdb.Command):
     def __init__(self):
         super(StopAtLoad, self).__init__('stop_at_load', gdb.COMMAND_NONE)
